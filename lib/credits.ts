@@ -1,0 +1,30 @@
+"use server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./authOptions";
+import prisma from "./prisma";
+
+export const incrementCredits = async (increment: number) => {
+  try {
+    const session: any = await getServerSession(authOptions);
+    if (!session) {
+      return false;
+    }
+
+    const currentUser = await prisma.user.update({
+      where: {
+        id: session.user.id,
+      },
+      data: {
+        totalCredits: {
+          increment,
+        },
+      },
+    });
+    if (currentUser) {
+      return currentUser;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+};
