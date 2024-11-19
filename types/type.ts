@@ -7,16 +7,16 @@ export interface ITelegramUser {
 }
 
 export interface User {
-  id: string,
-  firstName: string,
-  telegramId: string | number,
-  createdAt: string,
-  updatedAt: string,
-  totalCredits: number,
-  toolCredits: number,
-  promptCredits: number,
-  referralCode: string,
-  referredById?: string | null,
+  id: string;
+  firstName: string;
+  telegramId: string | number;
+  createdAt: string;
+  updatedAt: string;
+  totalScore: number;
+  gameScore: number;
+  referralScore: number;
+  referralCode: string;
+  referredById?: string | null;
 }
 
 export interface IWebApp {
