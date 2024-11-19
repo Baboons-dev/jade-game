@@ -2,7 +2,8 @@ const {Telegraf} = require('telegraf');
 const crypto = require('crypto-js');
 
 const web_link = 'https://june-tg-bot.baboons.tech/';
-const TOKEN = '7992709613:AAHI5IP6VFGeuxpuKGZ_xVaN-rWQv7gsRXE';
+const TOKEN = '7914604069:AAFNrVN4BGxeXcjhonTz-uRQqM79n5xk2QM';
+
 
 const bot = new Telegraf(TOKEN);
 var secretKey =
