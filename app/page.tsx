@@ -17,7 +17,9 @@ export default function Home() {
   const [isActive, setIsActive] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const maxDepth = 100;
-  const { update } = useSession();
+  const { data, update } = useSession();
+
+  console.log(data?.user);
 
   const handleTap = () => {
     setIsActive(true);
