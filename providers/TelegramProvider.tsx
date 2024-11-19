@@ -74,7 +74,7 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     console.log('value.telegram_user?.id', value.telegram_user, 'tgId<<><><><>', tgId);
-    logout();
+    // logout();
     if (value.telegram_user?.id && tgId) {
       console.log('logging in tgProvider');
       login(value.telegram_user, tgId);
