@@ -10,6 +10,12 @@ import { useGameStore } from '@/lib/store';
 import { incrementGameScore } from '@/lib/credits';
 import { useSession } from 'next-auth/react';
 
+type TUser = {
+  id: string;
+  firstName: string;
+  totalCredits: number;
+};
+
 export default function Home() {
   const { level, addLevel } = useGameStore();
   const [depth, setDepth] = useState(0);
@@ -17,9 +23,10 @@ export default function Home() {
   const [isActive, setIsActive] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const maxDepth = 100;
-  const { data, update } = useSession();
+   const { data: session, update } = useSession();
+  const user = session?.user as TUser;
 
-  console.log(data?.user);
+
 
   const handleTap = () => {
     setIsActive(true);
@@ -46,6 +53,7 @@ export default function Home() {
       <div className="p-4 flex justify-center items-center bg-black/5">
         <div className="flex items-center gap-4">
           <Progress value={(depth / maxDepth) * 100} className="w-32" />
+          <span className="font-bold">{user?.firstName}</span>
           <span className="font-bold">Level {level}</span>
           <span className="font-bold">Score {score}</span>
         </div>
