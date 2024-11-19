@@ -1,12 +1,11 @@
-const {Telegraf} = require('telegraf');
+const { Telegraf } = require('telegraf');
 const crypto = require('crypto-js');
 
 const web_link = 'https://june-tg-bot.baboons.tech/';
 const TOKEN = '7992709613:AAHI5IP6VFGeuxpuKGZ_xVaN-rWQv7gsRXE';
 
 const bot = new Telegraf(TOKEN);
-var secretKey =
-  '02PhgD8F4bgtA0T8WB2/y0dvrtHKXXMwtht3HZgyHSzAUrJwXRYjUV9z0lLBbass';
+var secretKey = '02PhgD8F4bgtA0T8WB2/y0dvrtHKXXMwtht3HZgyHSzAUrJwXRYjUV9z0lLB3ass';
 
 function random16String() {
   let result = '';
@@ -63,8 +62,8 @@ bot.command('start', async (ctx) => {
               },
             },
           ],
-          [{text: '🔊 Telegram COMMUNITY', url: 'https://t.me/crypto_june'}],
-          [{text: '🫂 FOLLOW X', url: 'https://x.com/crypto_june'}],
+          [{ text: '🔊 Telegram COMMUNITY', url: 'https://t.me/crypto_june' }],
+          [{ text: '🫂 FOLLOW X', url: 'https://x.com/crypto_june' }],
         ],
       },
       caption: 'Start snow in june ' + '\n' + "Let's tap-tap snow and win!",
