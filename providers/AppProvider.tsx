@@ -10,11 +10,11 @@ type Props = {
 
 const AppProvider = ({ children }: Props) => {
   return (
-    <SessionProvider>
-      <TelegramProvider>
+    <TelegramProvider>
+      <SessionProvider>
         <ReferralProvider>{children}</ReferralProvider>
-      </TelegramProvider>
-    </SessionProvider>
+      </SessionProvider>
+    </TelegramProvider>
   );
 };
 
