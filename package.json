@@ -1,5 +1,5 @@
 {
-  "name": "drilling-game",
+  "name": "jade-game",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -31,11 +31,15 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "telegraf": "^4.16.3",
-    "telegram": "^2.26.6",
-    "zustand": "^4.5.2"
+    "telegram": "^2.26.6"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "@types/node": "20.6.2",
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
