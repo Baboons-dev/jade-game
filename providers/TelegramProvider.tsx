@@ -1,14 +1,8 @@
-"use client";
-import useUser from "@/hooks/useUser";
-import { ITelegramUser, IWebApp } from "@/types/type";
-import { usePathname, useSearchParams } from "next/navigation";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+'use client';
+import useUser from '@/hooks/useUser';
+import { ITelegramUser, IWebApp } from '@/types/type';
+import { usePathname, useSearchParams } from 'next/navigation';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 export interface ITelegramContext {
   webApp?: IWebApp;
@@ -17,17 +11,13 @@ export interface ITelegramContext {
 
 export const TelegramContext = createContext<ITelegramContext>({});
 
-export const TelegramProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const TelegramProvider = ({ children }: { children: React.ReactNode }) => {
   const [webApp, setWebApp] = useState<IWebApp | null>(null);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { login, logout } = useUser();
-  // const tgId = "6427898935961730nDXYGXvq6A7FWyWms6glFA==";
-  const tgId = searchParams.get("tgId");
+  const tgId = '6427898935961730nDXYGXvq6A7FWyWms6glFA==';
+  // const tgId = searchParams.get("tgId");
 
   useEffect(() => {
     const app = (window as any).Telegram?.WebApp;
@@ -36,7 +26,7 @@ export const TelegramProvider = ({
       setWebApp(app);
       setTimeout(() => {
         app.expand();
-        app.headerColor = "#0A0318";
+        app.headerColor = '#0A0318';
         app.isVerticalSwipesEnabled = false;
         app.disableVerticalSwipes();
         app.BackButton.show();
@@ -63,12 +53,10 @@ export const TelegramProvider = ({
   // encrypted 6365928462 2697130450116749GY92+QvsVj++ehtUq0oUSw==
   // encrypted 6365928463 7125520470488884wHmf5Sq5QSqOU4ch3hMLXQ==
 
-  // const statUser = {
-  //   id: 6365928461,
-  //   first_name: "waqas",
-  // };
-
-  const statUser = null;
+  const statUser = {
+    id: 6365928461,
+    first_name: 'waqas',
+  };
 
   const value = useMemo(() => {
     return webApp
@@ -83,15 +71,10 @@ export const TelegramProvider = ({
   }, [webApp, statUser]);
 
   useEffect(() => {
-    console.log(
-      "value.telegram_user?.id",
-      value.telegram_user,
-      "tgId<<><><><>",
-      tgId
-    );
+    console.log('value.telegram_user?.id', value.telegram_user, 'tgId<<><><><>', tgId);
     // logout();
     if (value.telegram_user?.id && tgId) {
-      console.log("logging in tgProvider");
+      console.log('logging in tgProvider');
       login(value.telegram_user, tgId);
     }
   }, [value, tgId]);

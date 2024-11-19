@@ -1,20 +1,20 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { NextAuthOptions } from "next-auth";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { NextAuthOptions } from 'next-auth';
 
-import prisma from "@/lib/prisma";
-import bcrypt from "bcrypt";
-import CredentialsProvider from "next-auth/providers/credentials";
+import prisma from '@/lib/prisma';
+import bcrypt from 'bcrypt';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const cookReferralCode = (length: number) => {
-  let code = "";
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   for (let i = 0; i < length; i++) {
     code += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return code;
 };
 
-const crypto = require("crypto-js");
+const crypto = require('crypto-js');
 
 async function decrypt(encryptedText: string) {
   if (encryptedText) {
@@ -44,21 +44,21 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
+      id: 'credentials',
+      name: 'Credentials',
       credentials: {
-        telegramId: { label: "telegramId", type: "text" },
-        tgId: { label: "tgId", type: "text" },
-        firstName: { label: "firstName", type: "text" },
+        telegramId: { label: 'telegramId', type: 'text' },
+        tgId: { label: 'tgId', type: 'text' },
+        firstName: { label: 'firstName', type: 'text' },
       },
       async authorize(credentials): Promise<any> {
-        console.log("credentials>>>>>>>>>>>>", credentials);
+        console.log('credentials>>>>>>>>>>>>', credentials);
         if (!credentials) {
-          throw new Error("No credentials provided.");
+          throw new Error('No credentials provided.');
         }
-        const decryptedId: any = await decrypt(credentials.tgId ?? "");
+        const decryptedId: any = await decrypt(credentials.tgId ?? '');
 
-        console.log("decryptedId", decryptedId);
+        console.log('decryptedId', decryptedId);
         if (decryptedId && decryptedId === credentials.telegramId) {
           let user: any = await prisma?.user?.findUnique({
             where: { telegramId: credentials.telegramId } as any,
@@ -68,14 +68,16 @@ export const authOptions: NextAuthOptions = {
               telegramId: true,
               createdAt: true,
               updatedAt: true,
-              totalCredits: true,
+              referralScore: true,
+              gameScore: true,
+              totalScore: true,
               referralCode: true,
               referrals: true,
               referredById: true,
             },
           });
 
-          console.log("user", user);
+          console.log('user', user);
 
           if (!user) {
             user = await prisma?.user?.create({
@@ -87,7 +89,7 @@ export const authOptions: NextAuthOptions = {
           }
 
           if (!user) {
-            throw new Error("No user found with the provided email.");
+            throw new Error('No user found with the provided email.');
           }
           if (user && !user.referralCode && user.firstName) {
             const code = cookReferralCode(6);
@@ -103,7 +105,9 @@ export const authOptions: NextAuthOptions = {
                 telegramId: true,
                 createdAt: true,
                 updatedAt: true,
-                totalCredits: true,
+                referralScore: true,
+                gameScore: true,
+                totalScore: true,
                 referralCode: true,
                 referrals: true,
                 referredById: true,
@@ -117,15 +121,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     CredentialsProvider({
-      id: "email-password",
-      name: "Email Password",
+      id: 'email-password',
+      name: 'Email Password',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials): Promise<any> {
         if (!credentials) {
-          throw new Error("No credentials provided.");
+          throw new Error('No credentials provided.');
         }
 
         const { email, password } = credentials;
@@ -135,13 +139,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!admin) {
-          throw new Error("No admin found with the provided email.");
+          throw new Error('No admin found with the provided email.');
         }
 
         const isPasswordValid = await bcrypt.compare(password, admin.password);
 
         if (!isPasswordValid) {
-          throw new Error("Invalid password.");
+          throw new Error('Invalid password.');
         }
 
         return {
@@ -153,18 +157,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   // secret: process.env.NEXTAUTH_SECRET,
   pages: {
     // signIn: "../../../login", // Path to your custom sign-in page
-    signIn: "/admin/login",
+    signIn: '/admin/login',
   },
   callbacks: {
     async jwt({ token, user, trigger, session }: any) {
-      console.log("hitted jwt", token, user, trigger, session);
+      console.log('hitted jwt', token, user, trigger, session);
 
-      if (trigger === "update" && token && !token.role && session) {
+      if (trigger === 'update' && token && !token.role && session) {
         console.log(token, session);
         token = { ...token, ...session };
       }
@@ -178,7 +182,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async session({ session, token }: any) {
-      console.log("session", token, session);
+      console.log('session', token, session);
       if (token && token.role && token.id) {
         session.user = {
           id: token.id,
