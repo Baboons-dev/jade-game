@@ -1,8 +1,8 @@
-"use client";
-import { SessionProvider } from "next-auth/react";
-import React from "react";
-import ReferralProvider from "./ReferralProvider";
-import { TelegramProvider } from "./TelegramProvider";
+'use client';
+import { SessionProvider } from 'next-auth/react';
+import React from 'react';
+import ReferralProvider from './ReferralProvider';
+import { TelegramProvider } from './TelegramProvider';
 
 type Props = {
   children: React.ReactNode;
@@ -10,11 +10,11 @@ type Props = {
 
 const AppProvider = ({ children }: Props) => {
   return (
-    <TelegramProvider>
-      <SessionProvider>
+    <SessionProvider>
+      <TelegramProvider>
         <ReferralProvider>{children}</ReferralProvider>
-      </SessionProvider>
-    </TelegramProvider>
+      </TelegramProvider>
+    </SessionProvider>
   );
 };
 
