@@ -3,6 +3,7 @@ import useUser from '@/hooks/useUser';
 import { ITelegramUser, IWebApp } from '@/types/type';
 import { usePathname, useSearchParams } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export interface ITelegramContext {
   webApp?: IWebApp;
@@ -16,6 +17,7 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { login, logout } = useUser();
+  const { data: session } = useSession();
   // const tgId = '6427898935961730nDXYGXvq6A7FWyWms6glFA==';
   const tgId = searchParams.get('tgId');
 
@@ -74,7 +76,13 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     console.log('value.telegram_user?.id', value.telegram_user, 'tgId<<><><><>', tgId);
-    // logout();
+    if (
+      value.telegram_user?.id &&
+      session?.user?.telegramId &&
+      value.telegram_user?.id !== session?.user?.telegramId
+    ) {
+      logout();
+    }
     if (value.telegram_user?.id && tgId) {
       console.log('logging in tgProvider');
       login(value.telegram_user, tgId);
