@@ -12,6 +12,12 @@ import { useSession } from 'next-auth/react';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 
+type TUser = {
+  id: string;
+  firstName: string;
+  totalCredits: number;
+};
+
 export default function Home() {
   const { level, addLevel } = useGameStore();
   const [depth, setDepth] = useState(0);
@@ -19,7 +25,8 @@ export default function Home() {
   const [isActive, setIsActive] = useState(false);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const maxDepth = 100;
-  const { update } = useSession();
+  const { data: session, update } = useSession();
+  const user = session?.user as TUser;
 
   const handleTap = () => {
     setIsActive(true);

@@ -5,6 +5,7 @@ import { Navigation } from "@/components/layout/Navigation";
 import { ThemeProvider } from "next-themes";
 import { Suspense } from "react";
 import AppProvider from "@/providers/AppProvider";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://telegram.org/js/telegram-web-app.js"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
