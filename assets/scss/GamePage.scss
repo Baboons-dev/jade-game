@@ -1,0 +1,112 @@
+.GamePage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: black;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+
+  .page-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+
+    .click_count {
+      position: absolute;
+      top: 100px;
+      left: 13px;
+      background: white;
+      border-radius: 13px;
+      padding: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 13;
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    .game-body {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      background: #A6EEFE;
+      padding-top: 300px;
+      transition: all 0.31s 0s ease-out;
+
+      .bg_jade {
+        position: relative;
+        z-index: -1;
+      }
+
+      .user_character {
+        position: absolute;
+        z-index: 1;
+        top: 180px;
+        transition: all 0.31s 0s ease-out;
+      }
+
+      .big-layer-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 315px;
+
+        img {
+          transition: all 0.31s 0s ease-out;
+          position: absolute;
+        }
+
+        .Dig-item-wrap {
+          position: absolute;
+          display: flex;
+          width: 220px;
+          flex-direction: column;
+
+          .Dig {
+            position: relative;
+          }
+        }
+
+        .Dig_base-item-wrap {
+          position: absolute;
+          display: flex;
+          width: 220px;
+          flex-direction: column;
+
+          .Dig_base {
+            position: relative;
+          }
+        }
+
+        .dig-bg-wrap {
+          margin-top: 30px;
+          width: 205px;
+          border-radius: 0px 0px 20px 20px;
+          overflow: hidden;
+
+          .dig-gradient {
+            background: linear-gradient(180deg, rgba(39, 21, 12, 0.00) 0%, rgba(39, 21, 12, 0.71) 21.91%, rgba(20, 13, 6, 0.71) 100%);
+            height: 82px;
+
+            &.block_height {
+              height: 123px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -37,7 +37,7 @@ export default function RootLayout({
           <Suspense>
             <AppProvider>
               <Navigation />
-              <main className="lg:pl-20">{children}</main>
+              <main >{children}</main>
             </AppProvider>
           </Suspense>
         </ThemeProvider>
